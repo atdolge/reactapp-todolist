@@ -1,70 +1,58 @@
-
-
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { withTracker } from 'meteor/react-meteor-data';
 
- 
+import { Tasks } from '../api/tasks.js';
 
 import Task from './Task.js';
 
- 
-
 // App component - represents the whole app
+class App extends Component {
+  handleSubmit(event) {
+    event.preventDefault();
 
-export default class App extends Component {
+    // Find the text field via the React Ref
+    const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
 
-  getTasks() {
+    Tasks.insert({
+      text,
+      createdAt: new Date(), // Current time
+    });
 
-    return [
-
-      { _id: 1, text: 'This is task 1' },
-
-      { _id: 2, text: 'This is task 2' },
-
-      { _id: 3, text: 'This is task 3' },
-
-    ];
-
+    //clear form
+    ReactDOM.findDOMNode(this.refs.textInput).value = '';
   }
-
- 
-
   renderTasks() {
-
-    return this.getTasks().map((task) => (
-
+    return this.props.tasks.map((task) => (
       <Task key={task._id} task={task} />
-
     ));
-
   }
-
- 
 
   render() {
-
     return (
-
       <div className="container">
-
         <header>
-
           <h1>Todo List</h1>
 
+          <form className="new-task" onSubmit={this.handleSubmit.bind(this)} >
+            <input
+              type="text"
+              ref="textInput"
+              placeholder="Type to add new tasks"
+            />
+          </form>
         </header>
 
- 
-
         <ul>
-
           {this.renderTasks()}
-
         </ul>
-
       </div>
-
     );
-
   }
-
 }
 
+export default withTracker(() => {
+  return {
+    tasks: Tasks.find({}).fetch(),
+  };
+})(App);

@@ -12,7 +12,7 @@ export default class Task extends Component {
     }
 
     deleteThisTask () {
-        Task.remove(this.props.task._id);
+        Tasks.remove(this.props.task._id);
     }
 
     render() {

@@ -12,3 +12,5 @@ Steps
 4 Type
     "meteor"
 In CLi to run the app at localhost:3000
+
+5 Open browser and go to: localhost:3000

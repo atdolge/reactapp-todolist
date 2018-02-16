@@ -10,5 +10,5 @@ Steps
 3 run npm install for dependencies
 
 4 Type
-    meteor
+    "meteor"
 In CLi to run the app at localhost:3000

@@ -24,6 +24,8 @@ class App extends Component {
     // Find the text field via the React Ref
     const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
 
+    Meteor.call('tasks.insert', text);
+
     Tasks.insert({
       text,
       createdAt: new Date(), // Current time
